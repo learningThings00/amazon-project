@@ -2,5 +2,14 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: roboto, arial;
+  font-family: Roboto, Arial;
+}
+
+body {
+  padding-top: 60px;
+  height: 10000px;
+}
+
+button {
+  cursor: pointer;
 }
