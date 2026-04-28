@@ -101,10 +101,12 @@
   width: 50px;
 }
 
-.cart-notification {
+.cart-quantity {
   position: absolute;
   top: 2px;
-  left: 30px;
+  left: 22px;
+  width: 25px;
+  text-align: center;
   color:rgb(254, 189, 5);
   font-weight: bold;
 }
