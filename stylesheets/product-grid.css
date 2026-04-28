@@ -27,6 +27,7 @@
 
 .product-name {
   margin-bottom: 8px;
+  height: 40px;
 
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -107,4 +108,8 @@ select {
 .add-to-cart-button:active {
   background-color: rgb(255, 217, 0);
   box-shadow: none;
+}
+
+.add-message-visible {
+  opacity: 1;
 }

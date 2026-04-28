@@ -28,7 +28,7 @@ function renderProducts() {
         <div class="product-price">$${(product.priceCents / 100).toFixed(2)}</div>
 
         <div class="product-quantity-selector">
-          <select name="quantity" id="quantity" class="select-quantity">
+          <select name="quantity" id="quantity" class="js-quantity-selector-${product.id}">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -42,7 +42,7 @@ function renderProducts() {
           </select>
         </div>
 
-        <div class="added-message">
+        <div class="added-message js-add-message-${product.id}">
           <img src="images/icons/checkmark.png" alt="checkmark" />
           <div>Added</div>
         </div>
@@ -50,11 +50,14 @@ function renderProducts() {
         <button class="add-to-cart-button js-add-to-cart" data-button-id="${product.id}">Add to Cart</button>
       </div>
     `;
+
   }).join('');
 
   document.querySelector('.js-product-display-container').innerHTML = productHTML;
 
 }
+
+const  allTimeoutIds = {};
 
 document.querySelectorAll('.js-add-to-cart').forEach((button) => {
   button.addEventListener('click', () => {
@@ -62,24 +65,44 @@ document.querySelectorAll('.js-add-to-cart').forEach((button) => {
 
     let matching;
     let cartQuantity = 0;
-
+    
     cart.forEach(item => {
       if (item.id === id) {
         matching = item;
       }
     });
 
+    const itemQuantity = document.querySelector(`.js-quantity-selector-${id}`);
+    const quantity = Number(itemQuantity.value);
+
     if (matching) {
-      matching.quantity++;
+      matching.quantity += quantity;
     } else {
       cart.push({
       id,
-      quantity: 1
+      quantity
     })
     }
 
     cart.forEach(item => cartQuantity += item.quantity);
     
     document.querySelector('.js-cart-quantity').innerText = cartQuantity;
-  })
+    
+
+    document.querySelector(`.js-add-message-${id}`).classList.add('add-message-visible');
+
+  
+      const previousTimeoutId = allTimeoutIds[id];
+      if (previousTimeoutId) {
+        clearTimeout(previousTimeoutId);
+      }
+    
+  
+    const timeoutId = setTimeout(() => {
+    document.querySelector(`.js-add-message-${id}`).classList.remove('add-message-visible');
+  }, 2000);
+
+  allTimeoutIds[id] = timeoutId;
+  });
+  
 })
