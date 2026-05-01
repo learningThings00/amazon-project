@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout</title>
+
+    <link rel="stylesheet" href="stylesheets/general.css" />
+    <link rel="stylesheet" href="stylesheets/header.css" />
+    <link rel="stylesheet" href="stylesheets/checkout.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="checkout-header">
+      <div class="header-left">
+        <img
+          src="images/logo/amazon-logo.png"
+          alt="Amazon Logo"
+          class="amazon-logo"
+        />
+      </div>
+
+      <div class="header-middle">
+        Checkout (<span class="cart-item">0 items</span>)
+      </div>
+
+      <div class="header-right">
+        <img
+          src="images/icons/checkout-lock-icon.png"
+          alt="Lock Icon"
+          class="lock-icon"
+        />
+      </div>
+    </header>
+
+    <main>
+      <div class="page-title">Review your order</div>
+      <div class="order-summary-card">
+        <div class="summary-title">Order Summary</div>
+        <div class="summary-row">
+          <div>Items (<span>0</span>):</div>
+          <div class="price">$0.00</div>
+        </div>
+
+        <div class="summary-row">
+          <div>Shipping & handling:</div>
+          <div class="price">$0.00</div>
+        </div>
+
+        <div class="summary-row">
+          <div>Total before tax:</div>
+          <div class="price sub-total">$0.00</div>
+        </div>
+
+        <div class="summary-row">
+          <div>Estimate tax (<span>10%</span>):</div>
+          <div class="price">$0.00</div>
+        </div>
+
+        <hr />
+
+        <div class="summary-row total-row">
+          <div>Order total:</div>
+          <div class="price">$0.00</div>
+        </div>
+
+        <button class="order-button empty-cart-order-button">
+          Place your order
+        </button>
+      </div>
+
+      <div class="order-details-list">
+        <div class="empty-cart-message">
+          <div>Your cart is empty.</div>
+          <a href="/">
+            <button class="view-products">View products</button>
+          </a>
+        </div>
+
+        <div class="order-product-card">
+          <div class="delivery-date">Delivery date: Tuesday, May 12</div>
+          <div class="product-description">
+            <img
+              src="images/products/athletic-cotton-socks-6-pairs.jpg"
+              alt="socks"
+              class="product-image"
+            />
+            <div>
+              <div class="product-name">
+                Black and gray Athletic Cotton Socks - 6 Pairs
+              </div>
+              <div class="product-price">$10.90</div>
+              <div class="quantity-row">
+                <div>Quantity: <span>1</span></div>
+                <div class="update-cart">Update</div>
+                <div class="delete-cart">Delete</div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="option-title">Choose a delivery option:</div>
+            <div class="delivery-date-select">
+              <div class="option-row">
+                <input
+                  type="radio"
+                  value="Tuesday, May 12"
+                  name="deliveryDate"
+                />
+                <div>
+                  <div class="expected-date">Tuesday, May 12</div>
+                  <div class="shipping-cost">FREE Shipping</div>
+                </div>
+              </div>
+
+              <div class="option-row">
+                <input
+                  type="radio"
+                  value="Wednesday, May 6"
+                  name="deliveryDate"
+                />
+                <div>
+                  <div class="expected-date">Wednesday, May 6</div>
+                  <div class="shipping-cost">$4.99 - Shipping</div>
+                </div>
+              </div>
+
+              <div class="option-row">
+                <input type="radio" value="Monday, May 4" name="deliveryDate" />
+                <div>
+                  <div class="expected-date">Monday, May 4</div>
+                  <div class="shipping-cost">$9.99 - Shipping</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

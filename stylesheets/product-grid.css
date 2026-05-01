@@ -71,10 +71,6 @@ select {
   cursor: pointer;
 }
 
- select:focus {
-  outline: 2px solid rgb(255, 143, 5);
-}
-
 .added-message {
   display: flex;
   align-items: center;

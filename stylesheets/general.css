@@ -12,3 +12,7 @@ body {
 button {
   cursor: pointer;
 }
+
+input:focus, select:focus {
+ outline: 2px solid rgb(255, 143, 5);
+}
