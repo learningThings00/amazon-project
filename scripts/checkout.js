@@ -1,5 +1,6 @@
-import { cart } from '../data/cart.js';
+import { cart, updateCart, updateStorage } from '../data/cart.js';
 import { products } from '../data/products.js';
+import { currencyFormat } from './utils/money.js';
 
 renderCart();
 
@@ -28,11 +29,11 @@ function renderCart() {
               <div class="product-name">
                ${matchingItem.name}
               </div>
-              <div class="product-price">$${(matchingItem.priceCents / 100).toFixed(2)}</div>
+              <div class="product-price">$${currencyFormat(matchingItem.priceCents)}</div>
               <div class="quantity-row">
                 <div>Quantity: <span>${cartItem.quantity}</span></div>
                 <div class="update-cart">Update</div>
-                <div class="delete-cart">Delete</div>
+                <div class="delete-cart js-delete-item" data-id="${cartItem.id}">Delete</div>
               </div>
             </div>
           </div>
@@ -44,7 +45,7 @@ function renderCart() {
                 <input
                   type="radio"
                   value="Tuesday, May 12"
-                  name="deliveryDate"
+                  name="delivery-option-${cartItem.id}"
                 />
                 <div>
                   <div class="expected-date">Tuesday, May 12</div>
@@ -56,7 +57,7 @@ function renderCart() {
                 <input
                   type="radio"
                   value="Wednesday, May 6"
-                  name="deliveryDate"
+                  name="delivery-option-${cartItem.id}"
                 />
                 <div>
                   <div class="expected-date">Wednesday, May 6</div>
@@ -65,7 +66,7 @@ function renderCart() {
               </div>
 
               <div class="option-row">
-                <input type="radio" value="Monday, May 4" name="deliveryDate" />
+                <input type="radio" value="Monday, May 4" name="delivery-option-${cartItem.id}" />
                 <div>
                   <div class="expected-date">Monday, May 4</div>
                   <div class="shipping-cost">$9.99 - Shipping</div>
@@ -90,4 +91,13 @@ function renderCart() {
     document.querySelector('.js-cart-list').innerHTML = cartHTML;
     document.querySelector('.js-place-order').classList.add('order-button');
   }
+
+  document.querySelectorAll('.js-delete-item').forEach((deleteButton) => {
+    deleteButton.addEventListener('click', () => {
+      const deleteId = deleteButton.dataset.id;
+      updateCart(deleteId);
+      renderCart();
+      updateStorage();
+    });
+  });
 }

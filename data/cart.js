@@ -1,4 +1,4 @@
-export const cart = JSON.parse(localStorage.getItem('cart')) || [];
+export let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 export function addToCart(id) {
   let matchingItem;
@@ -23,6 +23,12 @@ export function addToCart(id) {
   updateStorage();
 }
 
-function updateStorage() {
+export function updateStorage() {
   localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+export function updateCart(deleteId) {
+  cart = cart.filter((cartItem) => {
+    return deleteId !== cartItem.id;
+  });
 }

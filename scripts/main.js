@@ -1,5 +1,6 @@
 import { products } from '../data/products.js';
 import { cart, addToCart } from '../data/cart.js';
+import { currencyFormat } from './utils/money.js';
 
 renderProducts();
 
@@ -29,10 +30,10 @@ function renderProducts() {
           <div class="product-rating-count">${product.rating.count}</div>
         </div>
 
-        <div class="product-price">$${(product.priceCents / 100).toFixed(2)}</div>
+        <div class="product-price">$${currencyFormat(product.priceCents)}</div>
 
         <div class="product-quantity-selector">
-          <select name="quantity" id="quantity" class="js-quantity-selector-${product.id}">
+          <select name="quantity-${product.id}" id="quantity-${product.id}" class="js-quantity-selector-${product.id}">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
