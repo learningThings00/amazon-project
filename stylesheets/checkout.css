@@ -58,10 +58,12 @@ hr {
   background-color: rgb(255, 215, 15);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   opacity: 0.5;
+  cursor:auto;
 }
 
 .order-button {
   opacity: 1;
+  cursor: pointer;
 }
 
 .order-button:hover {
@@ -99,6 +101,7 @@ hr {
 
 .product-description {
   display: flex;
+  gap: 10px;
   margin-bottom: 20px;
 }
 
@@ -147,6 +150,7 @@ hr {
 
 .option-row input {
   width: 20px;
+  cursor: pointer;
 }
 
 .expected-date {
