@@ -1,8 +1,10 @@
 import { products } from '../data/products.js';
 import { cart, addToCart } from '../data/cart.js';
 import { currencyFormat } from './utils/money.js';
+import { updateCartQuantity } from './utils/cart-quantity.js';
 
 renderProducts();
+updateCartQuantity();
 
 function renderProducts() {
   let productHTML = products
@@ -60,14 +62,6 @@ function renderProducts() {
 
   document.querySelector('.js-product-display-container').innerHTML =
     productHTML;
-}
-
-function updateCartQuantity() {
-  let cartQuantity = 0;
-
-  cart.forEach((cartItem) => (cartQuantity += cartItem.quantity));
-
-  document.querySelector('.js-cart-quantity').innerText = cartQuantity;
 }
 
 const allTimeoutIds = {};

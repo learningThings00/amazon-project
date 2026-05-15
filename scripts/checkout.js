@@ -1,22 +1,69 @@
 import { cart, updateCart, updateStorage } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { currencyFormat } from './utils/money.js';
+import { updateCartQuantity } from './utils/cart-quantity.js';
 
 renderCart();
 
-let hello = cart;
+function deleteCartItems() {
+  document.querySelectorAll('.js-delete-item').forEach((deleteButton) => {
+    deleteButton.addEventListener('click', () => {
+      const deleteId = deleteButton.dataset.id;
+      updateCart(deleteId);
+      renderCart();
+      updateStorage();
+    });
+  });
+}
+
+function updateCartItems() {
+  document.querySelectorAll('.js-update-cart').forEach((updateButton) => {
+    updateButton.addEventListener('click', () => {
+      const updateId = updateButton.dataset.id;
+
+      document
+        .querySelector(`.js-edit-quantity-${updateId}`)
+        .classList.add('visible');
+      document
+        .querySelector(`.js-update-cart-${updateId}`)
+        .classList.add('not-visible');
+      document
+        .querySelector(`.js-item-quantity-${updateId}`)
+        .classList.add('not-visible');
+    });
+  });
+}
+
+function saveQuantity() {
+  document.querySelectorAll('.js-save-quantity').forEach((saveButton) => {
+    saveButton.addEventListener('click', () => {
+      const saveId = saveButton.dataset.id;
+
+      const matchingItem = cart.find((cartItem) => cartItem.id === saveId);
+      const quantity = document.querySelector(`.js-quantity-input-${saveId}`);
+      const value = Number(quantity.value);
+      if (value === 0) {
+        updateCart(matchingItem.id);
+        renderCart();
+        updateStorage();
+      } else if (value < 0 || value >= 100) {
+        alert('Not a Valid Quantity');
+      } else {
+        matchingItem.quantity = Number(quantity.value);
+        renderCart();
+        updateStorage();
+      }
+    });
+  });
+}
 
 function renderCart() {
   let cartHTML = cart
     .map((cartItem) => {
       let id = cartItem.id;
-      let matchingItem;
 
-      products.forEach((product) => {
-        if (product.id === id) {
-          matchingItem = product;
-        }
-      });
+      const matchingItem = products.find((product) => product.id === id);
+
       return `<div class="order-product-card">
           <div class="delivery-date">Delivery date: Tuesday, May 12</div>
           <div class="product-description">
@@ -31,8 +78,12 @@ function renderCart() {
               </div>
               <div class="product-price">$${currencyFormat(matchingItem.priceCents)}</div>
               <div class="quantity-row">
-                <div>Quantity: <span>${cartItem.quantity}</span></div>
-                <div class="update-cart">Update</div>
+                <div>Quantity: <span class="js-item-quantity-${cartItem.id}">${cartItem.quantity}</span></div>
+                <div class="update-cart js-update-cart js-update-cart-${cartItem.id}" data-id="${cartItem.id}">Update</div>
+                <div class="edit-quantity js-edit-quantity-${cartItem.id}">
+                  <input type="number" class="quantity-input js-quantity-input-${cartItem.id}" value="${cartItem.quantity}" />
+                  <span class="save-cart js-save-quantity js-save-quantity-${cartItem.id}" data-id="${cartItem.id}">Save</span>
+                </div>
                 <div class="delete-cart js-delete-item" data-id="${cartItem.id}">Delete</div>
               </div>
             </div>
@@ -92,12 +143,8 @@ function renderCart() {
     document.querySelector('.js-place-order').classList.add('order-button');
   }
 
-  document.querySelectorAll('.js-delete-item').forEach((deleteButton) => {
-    deleteButton.addEventListener('click', () => {
-      const deleteId = deleteButton.dataset.id;
-      updateCart(deleteId);
-      renderCart();
-      updateStorage();
-    });
-  });
+  deleteCartItems();
+  updateCartItems();
+  saveQuantity();
+  updateCartQuantity();
 }
