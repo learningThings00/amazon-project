@@ -1,7 +1,14 @@
-import { cart, updateCart, updateStorage } from '../data/cart.js';
+import {
+  cart,
+  updateCart,
+  updateCartOptions,
+  updateStorage
+} from '../data/cart.js';
 import { products } from '../data/products.js';
 import { currencyFormat } from './utils/money.js';
 import { updateCartQuantity } from './utils/cart-quantity.js';
+import { deliveryOptions } from '../data/delivery-options.js';
+import { dateFormat } from './utils/date-format.js';
 
 renderCart();
 
@@ -57,15 +64,56 @@ function saveQuantity() {
   });
 }
 
+function dateOptions(cartItem) {
+  let deliveryOptionHTML = deliveryOptions
+    .map((deliveryOption) => {
+      const deliveryString =
+        deliveryOption.id === 1
+          ? 'FREE'
+          : `$${currencyFormat(deliveryOption.deliveryPrice)} -`;
+
+      const isChecked =
+        Number(cartItem.deliveryOptionId) === deliveryOption.id
+          ? 'checked'
+          : '';
+
+      const dateString = dateFormat(deliveryOption);
+
+      return `<div class="option-row js-option-row"
+          data-id="${cartItem.id}"
+          data-delivery-option-id="${deliveryOption.id}">
+                <input
+                  type="radio"
+                  value="Tuesday, May 12"
+                  name="delivery-option-${cartItem.id}"
+                  ${isChecked}
+                />
+                <div>
+                  <div class="expected-date">${dateString}</div>
+                  <div class="shipping-cost"> ${deliveryString} Shipping</div>
+                </div>
+              </div>`;
+    })
+    .join('');
+
+  return deliveryOptionHTML;
+}
+
 function renderCart() {
   let cartHTML = cart
     .map((cartItem) => {
       let id = cartItem.id;
 
+      const option = deliveryOptions.find(
+        (value) => value.id === Number(cartItem.deliveryOptionId)
+      );
+
+      const dateString = dateFormat(option);
+
       const matchingItem = products.find((product) => product.id === id);
 
       return `<div class="order-product-card">
-          <div class="delivery-date">Delivery date: Tuesday, May 12</div>
+          <div class="delivery-date">Delivery date: ${dateString}</div>
           <div class="product-description">
             <img
               src="${matchingItem.image}"
@@ -78,13 +126,13 @@ function renderCart() {
               </div>
               <div class="product-price">$${currencyFormat(matchingItem.priceCents)}</div>
               <div class="quantity-row">
-                <div>Quantity: <span class="js-item-quantity-${cartItem.id}">${cartItem.quantity}</span></div>
-                <div class="update-cart js-update-cart js-update-cart-${cartItem.id}" data-id="${cartItem.id}">Update</div>
-                <div class="edit-quantity js-edit-quantity-${cartItem.id}">
-                  <input type="number" class="quantity-input js-quantity-input-${cartItem.id}" value="${cartItem.quantity}" />
-                  <span class="save-cart js-save-quantity js-save-quantity-${cartItem.id}" data-id="${cartItem.id}">Save</span>
+                <div>Quantity: <span class="js-item-quantity-${id}">${cartItem.quantity}</span></div>
+                <div class="update-cart js-update-cart js-update-cart-${id}" data-id="${id}">Update</div>
+                <div class="edit-quantity js-edit-quantity-${id}">
+                  <input type="number" class="quantity-input js-quantity-input-${id}" value="${cartItem.quantity}" name="quantity-${id}" />
+                  <span class="save-cart js-save-quantity js-save-quantity-${id}" data-id="${id}">Save</span>
                 </div>
-                <div class="delete-cart js-delete-item" data-id="${cartItem.id}">Delete</div>
+                <div class="delete-cart js-delete-item" data-id="${id}">Delete</div>
               </div>
             </div>
           </div>
@@ -92,37 +140,7 @@ function renderCart() {
           <div>
             <div class="option-title">Choose a delivery option:</div>
             <div class="delivery-date-select">
-              <div class="option-row">
-                <input
-                  type="radio"
-                  value="Tuesday, May 12"
-                  name="delivery-option-${cartItem.id}"
-                />
-                <div>
-                  <div class="expected-date">Tuesday, May 12</div>
-                  <div class="shipping-cost">FREE Shipping</div>
-                </div>
-              </div>
-
-              <div class="option-row">
-                <input
-                  type="radio"
-                  value="Wednesday, May 6"
-                  name="delivery-option-${cartItem.id}"
-                />
-                <div>
-                  <div class="expected-date">Wednesday, May 6</div>
-                  <div class="shipping-cost">$4.99 - Shipping</div>
-                </div>
-              </div>
-
-              <div class="option-row">
-                <input type="radio" value="Monday, May 4" name="delivery-option-${cartItem.id}" />
-                <div>
-                  <div class="expected-date">Monday, May 4</div>
-                  <div class="shipping-cost">$9.99 - Shipping</div>
-                </div>
-              </div>
+                   ${dateOptions(cartItem)}        
             </div>
           </div>
         </div>`;
@@ -142,6 +160,14 @@ function renderCart() {
     document.querySelector('.js-cart-list').innerHTML = cartHTML;
     document.querySelector('.js-place-order').classList.add('order-button');
   }
+
+  document.querySelectorAll('.js-option-row').forEach((optionElement) => {
+    optionElement.addEventListener('click', () => {
+      const { id, deliveryOptionId } = optionElement.dataset;
+      updateCartOptions(id, deliveryOptionId);
+      renderCart();
+    });
+  });
 
   deleteCartItems();
   updateCartItems();
