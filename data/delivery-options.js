@@ -2,7 +2,7 @@ export const deliveryOptions = [
   {
     id: 1,
     deliveryTime: 7,
-    deliveryPrice: 'FREE'
+    deliveryPrice: 0
   },
   {
     id: 2,
