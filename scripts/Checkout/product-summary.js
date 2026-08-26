@@ -16,8 +16,8 @@ function deleteCartItems() {
     deleteButton.addEventListener('click', () => {
       const deleteId = deleteButton.dataset.id;
       updateCart(deleteId);
-      renderProductSummary();
       renderPaymentSummary();
+      renderProductSummary();
       updateStorage();
     });
   });
@@ -51,15 +51,15 @@ function saveQuantity() {
       const value = Number(quantity.value);
       if (value === 0) {
         updateCart(matchingItem.id);
-        renderProductSummary();
         renderPaymentSummary();
+        renderProductSummary();
         updateStorage();
       } else if (value < 0 || value >= 100) {
         alert('Not a Valid Quantity');
       } else {
         matchingItem.quantity = Number(quantity.value);
-        renderProductSummary();
         renderPaymentSummary();
+        renderProductSummary();
         updateStorage();
       }
     });
@@ -163,8 +163,8 @@ export function renderProductSummary() {
     optionElement.addEventListener('click', () => {
       const { id, deliveryOptionId } = optionElement.dataset;
       updateCartOptions(id, deliveryOptionId);
-      renderProductSummary();
       renderPaymentSummary();
+      renderProductSummary();
     });
   });
 

@@ -4,7 +4,6 @@ import { products } from '../../data/products.js';
 import { updateCartQuantity } from '../utils/cart-quantity.js';
 import { currencyFormat } from '../utils/money.js';
 
-console.log(cart);
 function totalPrice() {
   const totalItemPriceCents = cart.reduce((acc, curr) => {
     let matchingProduct = products.find((product) => product.id === curr.id);
@@ -18,7 +17,6 @@ function calculateShipping() {
     let matchingOption =
       deliveryOptions.find((option) => curr.deliveryOptionId === option.id) ||
       deliveryOptions[0];
-    console.log(matchingOption);
     return acc + matchingOption.deliveryPrice;
   }, 0);
   return totalShippingCents;
