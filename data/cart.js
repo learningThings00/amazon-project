@@ -1,9 +1,11 @@
-export let cart = JSON.parse(localStorage.getItem('cart')) || [];
+export let cart = [];
+loadFromStorage();
 
-export function addToCart(id) {
-  const itemQuantity = document.querySelector(`.js-quantity-selector-${id}`);
-  const quantity = Number(itemQuantity.value);
+export function loadFromStorage() {
+  cart = JSON.parse(localStorage.getItem('cart')) || [];
+}
 
+export function addToCart(id, quantity) {
   const matchingItem = cart.find((cartItem) => cartItem.id === id);
 
   if (matchingItem) {

@@ -88,8 +88,11 @@ function addedMessage(id) {
 document.querySelectorAll('.js-add-to-cart').forEach((button) => {
   button.addEventListener('click', () => {
     const productId = button.dataset.buttonId;
-
-    addToCart(productId);
+    const itemQuantity = document.querySelector(
+      `.js-quantity-selector-${productId}`
+    );
+    let quantity = Number(itemQuantity.value);
+    addToCart(productId, quantity);
     updateCartQuantity();
     addedMessage(productId);
   });
