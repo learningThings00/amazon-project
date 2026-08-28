@@ -1,7 +1,7 @@
 import { cart } from '../../data/cart.js';
-import { deliveryOptions } from '../../data/delivery-options.js';
+import { deliveryOptions } from '../../data/deliveryOptions.js';
 import { products } from '../../data/products.js';
-import { updateCartQuantity } from '../utils/cart-quantity.js';
+import { updateCartQuantity } from '../utils/cartQuantity.js';
 import { currencyFormat } from '../utils/money.js';
 
 function totalPrice() {

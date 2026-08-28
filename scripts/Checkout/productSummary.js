@@ -5,11 +5,11 @@ import {
   updateStorage
 } from '../../data/cart.js';
 import { products } from '../../data/products.js';
-import { currencyFormat } from '.././utils/money.js';
-import { updateCartQuantity } from '.././utils/cart-quantity.js';
-import { deliveryOptions } from '../../data/delivery-options.js';
-import { dateFormat } from '.././utils/date-format.js';
-import { renderPaymentSummary } from './payment-summary.js';
+import { currencyFormat } from '../utils/money.js';
+import { updateCartQuantity } from '../utils/cartQuantity.js';
+import { deliveryOptions } from '../../data/deliveryOptions.js';
+import { dateFormat } from '../utils/dateFormat.js';
+import { renderPaymentSummary } from './paymentSummary.js';
 
 function deleteCartItems() {
   document.querySelectorAll('.js-delete-item').forEach((deleteButton) => {

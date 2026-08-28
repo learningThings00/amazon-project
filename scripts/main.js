@@ -1,7 +1,7 @@
 import { products } from '../data/products.js';
 import { cart, addToCart } from '../data/cart.js';
 import { currencyFormat } from './utils/money.js';
-import { updateCartQuantity } from './utils/cart-quantity.js';
+import { updateCartQuantity } from './utils/cartQuantity.js';
 
 renderProducts();
 updateCartQuantity();
