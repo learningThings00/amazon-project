@@ -110,7 +110,10 @@ export function renderProductSummary() {
 
       const matchingItem = products.find((product) => product.id === id);
 
-      return `<div class="order-product-card">
+      return `
+      <div class="order-product-card 
+      js-order-product-card-${id}
+      js-order-product-card">
           <div class="delivery-date">Delivery date: ${dateString}</div>
           <div class="product-description">
             <img
@@ -130,7 +133,7 @@ export function renderProductSummary() {
                   <input type="number" class="quantity-input js-quantity-input-${id}" value="${cartItem.quantity}" name="quantity-${id}" />
                   <span class="save-cart js-save-quantity js-save-quantity-${id}" data-id="${id}">Save</span>
                 </div>
-                <div class="delete-cart js-delete-item" data-id="${id}">Delete</div>
+                <div class="delete-cart js-delete-item js-delete-item-${id}" data-id="${id}">Delete</div>
               </div>
             </div>
           </div>
@@ -156,7 +159,6 @@ export function renderProductSummary() {
     document.querySelector('.js-place-order').classList.remove('order-button');
   } else {
     document.querySelector('.js-cart-list').innerHTML = cartHTML;
-    document.querySelector('.js-place-order').classList.add('order-button');
   }
 
   document.querySelectorAll('.js-option-row').forEach((optionElement) => {

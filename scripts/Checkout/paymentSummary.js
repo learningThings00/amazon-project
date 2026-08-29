@@ -61,5 +61,11 @@ export function renderPaymentSummary() {
 
   document.querySelector('.js-payment-summary').innerHTML = paymentSummaryHTML;
 
+  if (cart.length !== 0) {
+    document.querySelector('.js-place-order').classList.add('order-button');
+  } else {
+    document.querySelector('.js-place-order').classList.remove('order-button');
+  }
+
   document.querySelector('.js-item-quantity').innerText = updateCartQuantity();
 }
