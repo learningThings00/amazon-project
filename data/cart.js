@@ -32,6 +32,11 @@ export function updateCart(deleteId) {
 
 export function updateCartOptions(id, deliveryOptionId) {
   const matchingItem = cart.find((cartItem) => id === cartItem.id);
+
+  if (!matchingItem) {
+    return;
+  }
+
   matchingItem.deliveryOptionId = Number(deliveryOptionId);
 
   updateStorage();

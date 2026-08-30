@@ -85,11 +85,12 @@ function dateOptions(cartItem) {
                 <input
                   type="radio"
                   value="Tuesday, May 12"
+                  class="js-date-input-${cartItem.id}-${deliveryOption.id}"
                   name="delivery-option-${cartItem.id}"
                   ${isChecked}
                 />
                 <div>
-                  <div class="expected-date">${dateString}</div>
+                  <div class="expected-date js-date-${cartItem.id}-${deliveryOption.id}">${dateString}</div>
                   <div class="shipping-cost"> ${deliveryString} Shipping</div>
                 </div>
               </div>`;
@@ -122,10 +123,10 @@ export function renderProductSummary() {
               class="product-image"
             />
             <div>
-              <div class="product-name">
+              <div class="product-name js-product-name-${id}">
                ${matchingItem.name}
               </div>
-              <div class="product-price">$${currencyFormat(matchingItem.priceCents)}</div>
+              <div class="product-price js-product-price-${id}">$${currencyFormat(matchingItem.priceCents)}</div>
               <div class="quantity-row">
                 <div>Quantity: <span class="js-item-quantity-${id}">${cartItem.quantity}</span></div>
                 <div class="update-cart js-update-cart js-update-cart-${id}" data-id="${id}">Update</div>
@@ -140,7 +141,7 @@ export function renderProductSummary() {
 
           <div>
             <div class="option-title">Choose a delivery option:</div>
-            <div class="delivery-date-select">
+            <div class="delivery-date-select js-selects-delivery-date">
                    ${dateOptions(cartItem)}        
             </div>
           </div>
