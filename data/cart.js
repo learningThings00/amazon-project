@@ -24,10 +24,9 @@ export function updateStorage() {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-export function updateCart(deleteId) {
-  cart = cart.filter((cartItem) => {
-    return deleteId !== cartItem.id;
-  });
+export function deleteCartItem(deleteId) {
+  cart = cart.filter((cartItem) => cartItem.id !== deleteId);
+  updateStorage();
 }
 
 export function updateCartOptions(id, deliveryOptionId) {

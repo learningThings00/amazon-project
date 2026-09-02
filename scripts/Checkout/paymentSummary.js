@@ -23,35 +23,38 @@ function calculateShipping() {
 }
 
 export function renderPaymentSummary() {
-  calculateShipping();
-  let taxCents = (totalPrice() + calculateShipping()) * 0.1;
+  const price = totalPrice();
+  const shipping = calculateShipping();
+  const beforeTax = price + shipping;
+  const tax = beforeTax * 0.1;
+  const afterTax = beforeTax + tax;
   let paymentSummaryHTML = `
   <div class="summary-title">Order Summary</div>
         <div class="summary-row">
           <div>Items (<span class="js-item-quantity"></span>):</div>
-          <div class="price">$${currencyFormat(totalPrice())}</div>
+          <div class="price">$${currencyFormat(price)}</div>
         </div>
 
         <div class="summary-row">
           <div>Shipping & handling:</div>
-          <div class="price js-shipping-price">$${currencyFormat(calculateShipping())}</div>
+          <div class="price js-shipping-price">$${currencyFormat(shipping)}</div>
         </div>
 
         <div class="summary-row">
           <div>Total before tax:</div>
-          <div class="price sub-total">$${currencyFormat(totalPrice() + calculateShipping())}</div>
+          <div class="price sub-total">$${currencyFormat(beforeTax)}</div>
         </div>
 
         <div class="summary-row">
           <div>Estimate tax (<span>10%</span>):</div>
-          <div class="price">$${currencyFormat(taxCents)}</div>
+          <div class="price">$${currencyFormat(tax)}</div>
         </div>
 
         <hr />
 
         <div class="summary-row total-row">
           <div>Order total:</div>
-          <div class="price js-total-price">$${currencyFormat(taxCents + totalPrice() + calculateShipping())}</div>
+          <div class="price js-total-price">$${currencyFormat(afterTax)}</div>
         </div>
 
         <button class="empty-cart-order-button js-place-order">

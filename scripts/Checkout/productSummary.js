@@ -1,6 +1,6 @@
 import {
   cart,
-  updateCart,
+  deleteCartItem,
   updateCartOptions,
   updateStorage
 } from '../../data/cart.js';
@@ -15,10 +15,9 @@ function deleteCartItems() {
   document.querySelectorAll('.js-delete-item').forEach((deleteButton) => {
     deleteButton.addEventListener('click', () => {
       const deleteId = deleteButton.dataset.id;
-      updateCart(deleteId);
+      deleteCartItem(deleteId);
       renderPaymentSummary();
       renderProductSummary();
-      updateStorage();
     });
   });
 }
@@ -50,11 +49,10 @@ function saveQuantity() {
       const quantity = document.querySelector(`.js-quantity-input-${saveId}`);
       const value = Number(quantity.value);
       if (value === 0) {
-        updateCart(matchingItem.id);
+        deleteCartItem(matchingItem.id);
         renderPaymentSummary();
         renderProductSummary();
-        updateStorage();
-      } else if (value < 0 || value >= 100) {
+      } else if (!Number.isInteger(value) || value < 0 || value >= 100) {
         alert('Not a Valid Quantity');
       } else {
         matchingItem.quantity = Number(quantity.value);
@@ -126,9 +124,13 @@ export function renderProductSummary() {
               <div class="product-name js-product-name-${id}">
                ${matchingItem.name}
               </div>
-              <div class="product-price js-product-price-${id}">$${currencyFormat(matchingItem.priceCents)}</div>
+              <div class="product-price js-product-price-${id}">
+              $${currencyFormat(matchingItem.priceCents)}
+              </div>
               <div class="quantity-row">
-                <div>Quantity: <span class="js-item-quantity-${id}">${cartItem.quantity}</span></div>
+                <div>
+                Quantity:<span class="js-item-quantity-${id}"> ${cartItem.quantity}</span>
+                </div>
                 <div class="update-cart js-update-cart js-update-cart-${id}" data-id="${id}">Update</div>
                 <div class="edit-quantity js-edit-quantity-${id}">
                   <input type="number" class="quantity-input js-quantity-input-${id}" value="${cartItem.quantity}" name="quantity-${id}" />
@@ -137,14 +139,16 @@ export function renderProductSummary() {
                 <div class="delete-cart js-delete-item js-delete-item-${id}" data-id="${id}">Delete</div>
               </div>
             </div>
-          </div>
 
-          <div>
-            <div class="option-title">Choose a delivery option:</div>
-            <div class="delivery-date-select js-selects-delivery-date">
-                   ${dateOptions(cartItem)}        
+            <div class="delivery-options">
+              <div class="option-title">Choose a delivery option:</div>
+              <div class="delivery-date-select js-selects-delivery-date">
+                    ${dateOptions(cartItem)}        
+              </div>
             </div>
           </div>
+
+          
         </div>`;
     })
     .join('');
