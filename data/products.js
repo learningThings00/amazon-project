@@ -24,6 +24,42 @@ class Product {
   getPrice() {
     return `$${currencyFormat(this.priceCents)}`;
   }
+
+  extraInfoHTML() {
+    return '';
+  }
+}
+
+class Clothing extends Product {
+  sizeChartLink;
+
+  constructor(productDetails) {
+    super(productDetails);
+    this.sizeChartLink = productDetails.sizeChartLink;
+  }
+
+  // super.extraInfoHTML();
+
+  extraInfoHTML() {
+    return `
+    <a href="${this.sizeChartLink}" target="_blank">click here</a>
+    `;
+  }
+}
+
+class Appliance extends Product {
+  warrantyLink;
+
+  constructor(productDetails) {
+    super(productDetails);
+    this.warrantyLink = productDetails.warrantyLink;
+  }
+
+  extraInfoHTML() {
+    return `
+    <a href="${this.warrantyLink}" target="_blank">click here</a>
+    `;
+  }
 }
 
 export const products = [
@@ -61,7 +97,9 @@ export const products = [
       count: 56
     },
     priceCents: 799,
-    keywords: ['tshirts', 'apparel', 'mens']
+    keywords: ['tshirts', 'apparel', 'mens'],
+    type: 'clothing',
+    sizeChartLink: 'images/clothing-size-chart.png'
   },
   {
     id: '54e0eccd-8f36-462b-b68a-8182611d9add',
@@ -73,7 +111,9 @@ export const products = [
       count: 2197
     },
     priceCents: 1899,
-    keywords: ['toaster', 'kitchen', 'appliances']
+    keywords: ['toaster', 'kitchen', 'appliances'],
+    type: 'appliance',
+    warrantyLink: 'images/appliance-warranty.png'
   },
   {
     id: '3ebe75dc-64d2-4137-8860-1f5a963e534b',
@@ -109,7 +149,9 @@ export const products = [
       count: 317
     },
     priceCents: 2400,
-    keywords: ['sweaters', 'apparel']
+    keywords: ['sweaters', 'apparel'],
+    type: 'clothing',
+    sizeChartLink: 'images/clothing-size-chart.png'
   },
   {
     id: '77919bbe-0e56-475b-adde-4f24dfed3a04',
@@ -145,7 +187,9 @@ export const products = [
       count: 235
     },
     priceCents: 2970,
-    keywords: ['robe', 'swimsuit', 'swimming', 'bathing', 'apparel']
+    keywords: ['robe', 'swimsuit', 'swimming', 'bathing', 'apparel'],
+    type: 'clothing',
+    sizeChartLink: 'images/clothing-size-chart.png'
   },
   {
     id: 'b86ddc8b-3501-4b17-9889-a3bad6fb585f',
@@ -205,7 +249,9 @@ export const products = [
       count: 846
     },
     priceCents: 5074,
-    keywords: ['water kettle', 'appliances', 'kitchen']
+    keywords: ['water kettle', 'appliances', 'kitchen'],
+    type: 'appliance',
+    warrantyLink: 'images/appliance-warranty.png'
   },
   {
     id: '58b4fc92-e98c-42aa-8c55-b6b79996769a',
@@ -289,7 +335,9 @@ export const products = [
       count: 2556
     },
     priceCents: 1599,
-    keywords: ['tshirts', 'shirts', 'apparel', 'mens']
+    keywords: ['tshirts', 'shirts', 'apparel', 'mens'],
+    type: 'clothing',
+    sizeChartLink: 'images/clothing-size-chart.png'
   },
   {
     id: '3fdfe8d6-9a15-4979-b459-585b0d0545b9',
@@ -445,7 +493,9 @@ export const products = [
       count: 1211
     },
     priceCents: 8250,
-    keywords: ['espresso makers', 'kitchen', 'appliances']
+    keywords: ['espresso makers', 'kitchen', 'appliances'],
+    type: 'appliance',
+    warrantyLink: 'images/appliance-warranty.png'
   },
   {
     id: '02e3a47e-dd68-467e-9f71-8bf6f723fdae',
@@ -493,7 +543,9 @@ export const products = [
       count: 3
     },
     priceCents: 10747,
-    keywords: ['food blenders', 'kitchen', 'appliances']
+    keywords: ['food blenders', 'kitchen', 'appliances'],
+    type: 'appliance',
+    warrantyLink: 'images/appliance-warranty.png'
   },
   {
     id: 'bc2847e9-5323-403f-b7cf-57fde044a955',
@@ -505,7 +557,9 @@ export const products = [
       count: 3157
     },
     priceCents: 3800,
-    keywords: ['sweaters', 'hoodies', 'apparel', 'mens']
+    keywords: ['sweaters', 'hoodies', 'apparel', 'mens'],
+    type: 'clothing',
+    sizeChartLink: 'images/clothing-size-chart.png'
   },
   {
     id: '36c64692-677f-4f58-b5ec-0dc2cf109e27',
@@ -531,6 +585,13 @@ export const products = [
     priceCents: 1899,
     keywords: ['kitchen', 'kitchen towels', 'tissues']
   }
-].map((productDetails) => new Product(productDetails));
+].map((productDetails) => {
+  if (productDetails.type === 'clothing') {
+    return new Clothing(productDetails);
+  }
 
-console.log(products);
+  if (productDetails.type === 'appliance') {
+    return new Appliance(productDetails);
+  }
+  return new Product(productDetails);
+});

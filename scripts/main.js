@@ -48,6 +48,9 @@ function renderProducts() {
           </select>
         </div>
 
+        ${product.extraInfoHTML()}
+
+
         <div class="added-message js-add-message-${product.id}">
           <img src="images/icons/checkmark.png" alt="checkmark" />
           <div>Added</div>
