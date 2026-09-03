@@ -25,14 +25,13 @@ function renderProducts() {
 
         <div class="product-rating-container">
           <img
-            src="images/ratings/rating-${product.rating.stars * 10}.png"
-            alt="${product.rating.stars}"
+            src="images/ratings/rating-${product.getRating()}"
             class="rating-image"
           />
           <div class="product-rating-count">${product.rating.count}</div>
         </div>
 
-        <div class="product-price">$${currencyFormat(product.priceCents)}</div>
+        <div class="product-price">${product.getPrice()}</div>
 
         <div class="product-quantity-selector">
           <select name="quantity-${product.id}" id="quantity-${product.id}" class="js-quantity-selector-${product.id}">

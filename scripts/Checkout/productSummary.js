@@ -125,7 +125,7 @@ export function renderProductSummary() {
                ${matchingItem.name}
               </div>
               <div class="product-price js-product-price-${id}">
-              $${currencyFormat(matchingItem.priceCents)}
+              ${matchingItem.getPrice()}
               </div>
               <div class="quantity-row">
                 <div>

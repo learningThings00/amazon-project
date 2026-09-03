@@ -1,58 +1,58 @@
-function Cart(localStorageKey) {
-  const cart = {
-    cartItem: [],
+class Cart {
+  cartItem = [];
+  #localStorageKey = '';
 
-    loadFromStorage() {
-      this.cartItem = JSON.parse(localStorage.getItem(localStorageKey)) || [];
-    },
+  constructor(localStorageKey) {
+    this.#localStorageKey = localStorageKey;
+    this.#loadFromStorage();
+  }
 
-    addToCart(id, quantity) {
-      const matchingItem = this.cartItem.find((cartItem) => cartItem.id === id);
+  #loadFromStorage() {
+    this.cartItem =
+      JSON.parse(localStorage.getItem(this.#localStorageKey)) || [];
+  }
 
-      if (matchingItem) {
-        matchingItem.quantity += quantity;
-      } else {
-        this.cartItem.push({
-          id,
-          quantity,
-          deliveryOptionId: 1
-        });
-      }
-      this.updateStorage();
-    },
+  addToCart(id, quantity) {
+    const matchingItem = this.cartItem.find((cartItem) => cartItem.id === id);
 
-    updateStorage() {
-      localStorage.setItem(localStorageKey, JSON.stringify(this.cartItem));
-    },
-
-    deleteCartItem(deleteId) {
-      this.cartItem = this.cartItem.filter(
-        (cartItem) => cartItem.id !== deleteId
-      );
-      this.updateStorage();
-    },
-
-    updateCartOptions(id, deliveryOptionId) {
-      const matchingItem = this.cartItem.find((cartItem) => id === cartItem.id);
-
-      if (!matchingItem) {
-        return;
-      }
-
-      matchingItem.deliveryOptionId = Number(deliveryOptionId);
-
-      this.updateStorage();
+    if (matchingItem) {
+      matchingItem.quantity += quantity;
+    } else {
+      this.cartItem.push({
+        id,
+        quantity,
+        deliveryOptionId: 1
+      });
     }
-  };
+    this.updateStorage();
+  }
 
-  return cart;
+  updateStorage() {
+    localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItem));
+  }
+
+  deleteCartItem(deleteId) {
+    this.cartItem = this.cartItem.filter(
+      (cartItem) => cartItem.id !== deleteId
+    );
+    this.updateStorage();
+  }
+
+  updateCartOptions(id, deliveryOptionId) {
+    const matchingItem = this.cartItem.find((cartItem) => id === cartItem.id);
+
+    if (!matchingItem) {
+      return;
+    }
+
+    matchingItem.deliveryOptionId = Number(deliveryOptionId);
+
+    this.updateStorage();
+  }
 }
 
-const cart = Cart('cart-oop');
-const businessCart = Cart('cart-business');
-
-cart.loadFromStorage();
-businessCart.loadFromStorage();
+const cart = new Cart('cart-oop');
+const businessCart = new Cart('cart-business');
 
 console.log(cart);
 console.log(businessCart);
