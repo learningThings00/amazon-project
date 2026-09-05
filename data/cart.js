@@ -1,3 +1,5 @@
+import { deliveryOptions } from './deliveryOptions.js';
+
 export let cart = [];
 loadFromStorage();
 
@@ -31,12 +33,19 @@ export function deleteCartItem(deleteId) {
 
 export function updateCartOptions(id, deliveryOptionId) {
   const matchingItem = cart.find((cartItem) => id === cartItem.id);
+  const optionId = Number(deliveryOptionId);
 
   if (!matchingItem) {
     return;
   }
 
-  matchingItem.deliveryOptionId = Number(deliveryOptionId);
+  const option = deliveryOptions.find((opt) => optionId === opt.id);
+
+  if (!option) {
+    return;
+  }
+
+  matchingItem.deliveryOptionId = optionId;
 
   updateStorage();
 }

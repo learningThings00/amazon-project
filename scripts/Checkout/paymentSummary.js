@@ -12,7 +12,7 @@ function totalPrice() {
   return totalItemPriceCents;
 }
 
-function calculateShipping() {
+export function calculateShipping() {
   const totalShippingCents = cart.reduce((acc, curr) => {
     let matchingOption =
       deliveryOptions.find((option) => curr.deliveryOptionId === option.id) ||
@@ -47,7 +47,7 @@ export function renderPaymentSummary() {
 
         <div class="summary-row">
           <div>Estimate tax (<span>10%</span>):</div>
-          <div class="price">$${currencyFormat(tax)}</div>
+          <div class="price js-tax-price">$${currencyFormat(tax)}</div>
         </div>
 
         <hr />

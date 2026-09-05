@@ -1,5 +1,5 @@
 import { currencyFormat } from '../scripts/utils/money.js';
-class Product {
+export class Product {
   id;
   image;
   alt;
@@ -30,7 +30,7 @@ class Product {
   }
 }
 
-class Clothing extends Product {
+export class Clothing extends Product {
   sizeChartLink;
 
   constructor(productDetails) {
@@ -42,22 +42,33 @@ class Clothing extends Product {
 
   extraInfoHTML() {
     return `
-    <a href="${this.sizeChartLink}" target="_blank">click here</a>
+    <a href="${this.sizeChartLink}" target="_blank">
+    Size Chart</a>
     `;
   }
 }
 
-class Appliance extends Product {
+export class Appliance extends Product {
   warrantyLink;
+  instructionLink;
 
   constructor(productDetails) {
     super(productDetails);
     this.warrantyLink = productDetails.warrantyLink;
+    this.instructionLink = productDetails.instructionLink;
   }
 
   extraInfoHTML() {
     return `
-    <a href="${this.warrantyLink}" target="_blank">click here</a>
+    <div>
+    <a href="${this.instructionLink}" target="_blank">
+    Instructions
+    </a>
+    <br/>
+    <a href="${this.warrantyLink}" target="_blank">
+    Warranty
+    </a>
+    </div>
     `;
   }
 }
@@ -113,7 +124,8 @@ export const products = [
     priceCents: 1899,
     keywords: ['toaster', 'kitchen', 'appliances'],
     type: 'appliance',
-    warrantyLink: 'images/appliance-warranty.png'
+    warrantyLink: 'images/appliance-warranty.png',
+    instructionLink: 'images/appliance-instructions.png'
   },
   {
     id: '3ebe75dc-64d2-4137-8860-1f5a963e534b',
@@ -251,7 +263,8 @@ export const products = [
     priceCents: 5074,
     keywords: ['water kettle', 'appliances', 'kitchen'],
     type: 'appliance',
-    warrantyLink: 'images/appliance-warranty.png'
+    warrantyLink: 'images/appliance-warranty.png',
+    instructionLink: 'images/appliance-instructions.png'
   },
   {
     id: '58b4fc92-e98c-42aa-8c55-b6b79996769a',
@@ -495,7 +508,8 @@ export const products = [
     priceCents: 8250,
     keywords: ['espresso makers', 'kitchen', 'appliances'],
     type: 'appliance',
-    warrantyLink: 'images/appliance-warranty.png'
+    warrantyLink: 'images/appliance-warranty.png',
+    instructionLink: 'images/appliance-instructions.png'
   },
   {
     id: '02e3a47e-dd68-467e-9f71-8bf6f723fdae',
@@ -545,7 +559,8 @@ export const products = [
     priceCents: 10747,
     keywords: ['food blenders', 'kitchen', 'appliances'],
     type: 'appliance',
-    warrantyLink: 'images/appliance-warranty.png'
+    warrantyLink: 'images/appliance-warranty.png',
+    instructionLink: 'images/appliance-instructions.png'
   },
   {
     id: 'bc2847e9-5323-403f-b7cf-57fde044a955',
