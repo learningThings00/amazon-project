@@ -1,12 +1,12 @@
-import { products } from '../data/products.js';
-import { cart, addToCart } from '../data/cart.js';
-import { currencyFormat } from './utils/money.js';
+import { products, loadProducts } from '../data/products.js';
+import { addToCart } from '../data/cart.js';
 import { updateCartQuantity } from './utils/cartQuantity.js';
+loadProducts(() => {
+  renderProducts();
+  updateCartQuantity();
+});
 
-renderProducts();
-updateCartQuantity();
-
-function renderProducts() {
+export function renderProducts() {
   let productHTML = products
     .map((product) => {
       return `
@@ -16,6 +16,7 @@ function renderProducts() {
             src="${product.image}"
             alt="${product.alt}"
             class="product-image"
+            onerror="this.onerror=null; this.src='images/images.png';"
           />
         </div>
 
@@ -64,8 +65,20 @@ function renderProducts() {
 
   document.querySelector('.js-product-display-container').innerHTML =
     productHTML;
-}
 
+  document.querySelectorAll('.js-add-to-cart').forEach((button) => {
+    button.addEventListener('click', () => {
+      const productId = button.dataset.buttonId;
+      const itemQuantity = document.querySelector(
+        `.js-quantity-selector-${productId}`
+      );
+      let quantity = Number(itemQuantity.value);
+      addToCart(productId, quantity);
+      updateCartQuantity();
+      addedMessage(productId);
+    });
+  });
+}
 const allTimeoutIds = {};
 
 function addedMessage(id) {
@@ -86,16 +99,3 @@ function addedMessage(id) {
 
   allTimeoutIds[id] = timeoutId;
 }
-
-document.querySelectorAll('.js-add-to-cart').forEach((button) => {
-  button.addEventListener('click', () => {
-    const productId = button.dataset.buttonId;
-    const itemQuantity = document.querySelector(
-      `.js-quantity-selector-${productId}`
-    );
-    let quantity = Number(itemQuantity.value);
-    addToCart(productId, quantity);
-    updateCartQuantity();
-    addedMessage(productId);
-  });
-});
