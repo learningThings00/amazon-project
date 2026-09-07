@@ -1,7 +1,17 @@
 import { products, loadProducts } from '../data/products.js';
 import { addToCart } from '../data/cart.js';
 import { updateCartQuantity } from './utils/cartQuantity.js';
+
+/*
 loadProducts(() => {
+  renderProducts();
+  updateCartQuantity();
+});
+*/
+
+new Promise((resolve) => {
+  loadProducts(() => resolve());
+}).then(() => {
   renderProducts();
   updateCartQuantity();
 });

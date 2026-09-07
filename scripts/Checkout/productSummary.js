@@ -119,6 +119,7 @@ export function renderProductSummary() {
               src="${matchingItem.image}"
               alt="${matchingItem.alt}"
               class="product-image"
+              onerror="this.onerror=null; this.src='images/images.png';"
             />
             <div>
               <div class="product-name js-product-name-${id}">
