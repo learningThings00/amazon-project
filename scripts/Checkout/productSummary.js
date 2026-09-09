@@ -45,7 +45,9 @@ function saveQuantity() {
     saveButton.addEventListener('click', () => {
       const saveId = saveButton.dataset.id;
 
-      const matchingItem = cart.find((cartItem) => cartItem.id === saveId);
+      const matchingItem = cart.find(
+        (cartItem) => cartItem.productId === saveId
+      );
       const quantity = document.querySelector(`.js-quantity-input-${saveId}`);
       const value = Number(quantity.value);
       if (value === 0) {
@@ -78,17 +80,17 @@ function dateOptions(cartItem) {
       const dateString = dateFormat(deliveryOption);
 
       return `<div class="option-row js-option-row"
-          data-id="${cartItem.id}"
+          data-id="${cartItem.productId}"
           data-delivery-option-id="${deliveryOption.id}">
                 <input
                   type="radio"
                   value="Tuesday, May 12"
-                  class="js-date-input-${cartItem.id}-${deliveryOption.id}"
-                  name="delivery-option-${cartItem.id}"
+                  class="js-date-input-${cartItem.productId}-${deliveryOption.id}"
+                  name="delivery-option-${cartItem.productId}"
                   ${isChecked}
                 />
                 <div>
-                  <div class="expected-date js-date-${cartItem.id}-${deliveryOption.id}">${dateString}</div>
+                  <div class="expected-date js-date-${cartItem.productId}-${deliveryOption.id}">${dateString}</div>
                   <div class="shipping-cost"> ${deliveryString} Shipping</div>
                 </div>
               </div>`;
@@ -99,10 +101,10 @@ function dateOptions(cartItem) {
 export function renderProductSummary() {
   let cartHTML = cart
     .map((cartItem) => {
-      let id = cartItem.id;
+      let id = cartItem.productId;
 
       const option = deliveryOptions.find(
-        (value) => value.id === Number(cartItem.deliveryOptionId)
+        (value) => value.id === cartItem.deliveryOptionId
       );
 
       const dateString = dateFormat(option);

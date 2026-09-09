@@ -2,17 +2,28 @@ import { products, loadProductsFetch } from '../data/products.js';
 import { addToCart } from '../data/cart.js';
 import { updateCartQuantity } from './utils/cartQuantity.js';
 
+async function loadPage() {
+  try {
+    await loadProductsFetch();
+  } catch (error) {
+    console.log('Unexpected error. Please try again later.');
+  }
+  renderProducts();
+  updateCartQuantity();
+}
+loadPage();
 /*
 loadProducts(() => {
   renderProducts();
   updateCartQuantity();
 });
 */
-
+/*
 loadProductsFetch().then(() => {
   renderProducts();
   updateCartQuantity();
 });
+*/
 /*
 new Promise((resolve) => {
   loadProducts(() => resolve());

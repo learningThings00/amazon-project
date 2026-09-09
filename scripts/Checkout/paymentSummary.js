@@ -3,10 +3,13 @@ import { deliveryOptions } from '../../data/deliveryOptions.js';
 import { products } from '../../data/products.js';
 import { updateCartQuantity } from '../utils/cartQuantity.js';
 import { currencyFormat } from '../utils/money.js';
+import { addOrder } from '../../data/orders.js';
 
 function totalPrice() {
   const totalItemPriceCents = cart.reduce((acc, curr) => {
-    let matchingProduct = products.find((product) => product.id === curr.id);
+    let matchingProduct = products.find(
+      (product) => product.id === curr.productId
+    );
     return acc + matchingProduct.priceCents * curr.quantity;
   }, 0);
   return totalItemPriceCents;
@@ -71,4 +74,28 @@ export function renderPaymentSummary() {
   }
 
   document.querySelector('.js-item-quantity').innerText = updateCartQuantity();
+
+  document
+    .querySelector('.js-place-order')
+    .addEventListener('click', async () => {
+      try {
+        const response = await fetch('https://supersimplebackend.dev/orders', {
+          method: 'POST',
+          headers: {
+            'content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            cart: cart
+          })
+        });
+
+        const order = await response.json();
+        addOrder(order);
+      } catch (error) {
+        console.log('Unexpected error. Please try again later.');
+      }
+
+      window.location.href = 'orders.html';
+      localStorage.removeItem('cart');
+    });
 }
