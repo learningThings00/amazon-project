@@ -10,6 +10,10 @@ function totalPrice() {
     let matchingProduct = products.find(
       (product) => product.id === curr.productId
     );
+
+    if (!matchingProduct) {
+      return 'Can not find matching product in product array';
+    }
     return acc + matchingProduct.priceCents * curr.quantity;
   }, 0);
   return totalItemPriceCents;
@@ -69,33 +73,36 @@ export function renderPaymentSummary() {
 
   if (cart.length !== 0) {
     document.querySelector('.js-place-order').classList.add('order-button');
+
+    document
+      .querySelector('.js-place-order')
+      .addEventListener('click', async () => {
+        try {
+          const response = await fetch(
+            'https://supersimplebackend.dev/orders',
+            {
+              method: 'POST',
+              headers: {
+                'content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                cart: cart
+              })
+            }
+          );
+
+          const order = await response.json();
+          addOrder(order);
+        } catch (error) {
+          console.log('Unexpected error. Please try again later.');
+        }
+
+        window.location.href = 'orders.html';
+        localStorage.removeItem('cart');
+      });
   } else {
     document.querySelector('.js-place-order').classList.remove('order-button');
   }
 
   document.querySelector('.js-item-quantity').innerText = updateCartQuantity();
-
-  document
-    .querySelector('.js-place-order')
-    .addEventListener('click', async () => {
-      try {
-        const response = await fetch('https://supersimplebackend.dev/orders', {
-          method: 'POST',
-          headers: {
-            'content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            cart: cart
-          })
-        });
-
-        const order = await response.json();
-        addOrder(order);
-      } catch (error) {
-        console.log('Unexpected error. Please try again later.');
-      }
-
-      window.location.href = 'orders.html';
-      localStorage.removeItem('cart');
-    });
 }

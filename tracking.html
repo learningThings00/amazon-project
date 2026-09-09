@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Amazon Project</title>
+    <title>Tracking</title>
 
     <link rel="stylesheet" href="stylesheets/general.css" />
     <link rel="stylesheet" href="stylesheets/header.css" />
-    <link rel="stylesheet" href="stylesheets/product-grid.css" />
+    <link rel="stylesheet" href="stylesheets/tracking.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -64,8 +64,23 @@
         </a>
       </div>
     </header>
-    <main class="product-grid js-product-display-container"></main>
 
-    <script type="module" src="scripts/main.js"></script>
+    <main>
+      <a class="back-to-orders" href="orders.html">View all orders</a>
+
+      <div class="page-title">Arriving on Friday, September 14</div>
+      <div class="product-name">2 slot Toaster</div>
+      <div class="quantity-row">Quantity: <span>1</span></div>
+      <img
+        src="images/products/2-slot-toaster-white.jpg"
+        class="product-image"
+      />
+      <div class="progress-label-container">
+        <div class="preparing">Preparing</div>
+        <div class="shipped">Shipped</div>
+        <div class="delivered">Delivered</div>
+      </div>
+      <div class="progress-bar-container"></div>
+    </main>
   </body>
 </html>

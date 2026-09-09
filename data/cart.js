@@ -8,7 +8,9 @@ export function loadFromStorage() {
 }
 
 export function addToCart(productId, quantity) {
-  const matchingItem = cart.find((cartItem) => cartItem.id === productId);
+  const matchingItem = cart.find(
+    (cartItem) => cartItem.productId === productId
+  );
 
   if (matchingItem) {
     matchingItem.quantity += quantity;

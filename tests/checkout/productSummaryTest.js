@@ -6,8 +6,8 @@ describe('test suite: renderProductSummary', () => {
   const productId1 = 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6';
   const productId2 = '15b6fc6f-327a-4ec4-896f-486349e85a3d';
 
-  beforeAll((done) => {
-    loadProductsFetch().then(() => done());
+  beforeAll(async () => {
+    await loadProductsFetch();
   });
 
   beforeEach(() => {
@@ -22,14 +22,14 @@ describe('test suite: renderProductSummary', () => {
     spyOn(localStorage, 'getItem').and.callFake(() =>
       JSON.stringify([
         {
-          id: productId1,
+          productId: productId1,
           quantity: 2,
-          deliveryOptionId: 1
+          deliveryOptionId: '1'
         },
         {
-          id: productId2,
+          productId: productId2,
           quantity: 1,
-          deliveryOptionId: 2
+          deliveryOptionId: '2'
         }
       ])
     );
@@ -73,7 +73,7 @@ describe('test suite: renderProductSummary', () => {
     ).not.toEqual(null);
     expect(localStorage.setItem).toHaveBeenCalledTimes(1);
     expect(cart.length).toEqual(1);
-    expect(cart[0].id).toEqual(productId2);
+    expect(cart[0].productId).toEqual(productId2);
   });
 
   it('updates delivery option', () => {
@@ -83,7 +83,7 @@ describe('test suite: renderProductSummary', () => {
       document.querySelector(`.js-date-input-${productId1}-3`).checked
     ).toBe(true);
     expect(cart.length).toEqual(2);
-    expect(cart[0].deliveryOptionId).toEqual(3);
+    expect(cart[0].deliveryOptionId).toEqual('3');
     expect(document.querySelector('.js-shipping-price').innerText).toEqual(
       '$19.98'
     );

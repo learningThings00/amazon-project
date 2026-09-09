@@ -6,9 +6,10 @@ describe('test suite: renderPaymentSummary', () => {
   const productId1 = 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6';
   const productId2 = '15b6fc6f-327a-4ec4-896f-486349e85a3d';
 
-  beforeAll((done) => {
-    loadProductsFetch().then(() => done());
+  beforeAll(async () => {
+    await loadProductsFetch();
   });
+
   beforeEach(() => {
     spyOn(localStorage, 'setItem');
 
@@ -30,8 +31,8 @@ describe('test suite: renderPaymentSummary', () => {
 
   it('adds total number of item', () => {
     setupCart([
-      { id: productId1, quantity: 1, deliveryOptionId: 2 },
-      { id: productId2, quantity: 2, deliveryOptionId: 3 }
+      { productId: productId1, quantity: 1, deliveryOptionId: '2' },
+      { ProductId: productId2, quantity: 2, deliveryOptionId: '3' }
     ]);
     loadFromStorage();
 
@@ -42,8 +43,8 @@ describe('test suite: renderPaymentSummary', () => {
 
   it('shows 0 as shipping when deliveryOptionId is 1', () => {
     setupCart([
-      { id: productId1, quantity: 1, deliveryOptionId: 1 },
-      { id: productId2, quantity: 2, deliveryOptionId: 1 }
+      { productId: productId1, quantity: 1, deliveryOptionId: '1' },
+      { productId: productId2, quantity: 2, deliveryOptionId: '1' }
     ]);
     loadFromStorage();
 
@@ -56,8 +57,8 @@ describe('test suite: renderPaymentSummary', () => {
 
   it('sums all paid shipping across mixed delivery option', () => {
     setupCart([
-      { id: productId1, quantity: 1, deliveryOptionId: 2 },
-      { id: productId2, quantity: 2, deliveryOptionId: 3 }
+      { productId: productId1, quantity: 1, deliveryOptionId: '2' },
+      { productId: productId2, quantity: 2, deliveryOptionId: '3' }
     ]);
     loadFromStorage();
 
@@ -70,8 +71,8 @@ describe('test suite: renderPaymentSummary', () => {
 
   it('calculates tax of all items and shipping', () => {
     setupCart([
-      { id: productId1, quantity: 1, deliveryOptionId: 2 },
-      { id: productId2, quantity: 2, deliveryOptionId: 3 }
+      { productId: productId1, quantity: 1, deliveryOptionId: '2' },
+      { productId: productId2, quantity: 2, deliveryOptionId: '3' }
     ]);
     loadFromStorage();
 
@@ -82,8 +83,8 @@ describe('test suite: renderPaymentSummary', () => {
 
   it('sums all the changes and shows final price', () => {
     setupCart([
-      { id: productId1, quantity: 1, deliveryOptionId: 2 },
-      { id: productId2, quantity: 2, deliveryOptionId: 3 }
+      { productId: productId1, quantity: 1, deliveryOptionId: '2' },
+      { productId: productId2, quantity: 2, deliveryOptionId: '3' }
     ]);
     loadFromStorage();
 
@@ -109,8 +110,8 @@ describe('test suite: renderPaymentSummary', () => {
 
   it('shows highlighted button when cart has items', () => {
     setupCart([
-      { id: productId1, quantity: 1, deliveryOptionId: 2 },
-      { id: productId2, quantity: 2, deliveryOptionId: 3 }
+      { proudctId: productId1, quantity: 1, deliveryOptionId: '2' },
+      { productId: productId2, quantity: 2, deliveryOptionId: '3' }
     ]);
     loadFromStorage();
 
@@ -125,8 +126,8 @@ describe('test suite: renderPaymentSummary', () => {
 
   it('falls back to free shipping if a cart item has an unrecognised deliveryOptionId', () => {
     setupCart([
-      { id: productId1, quantity: 1, deliveryOptionId: 67 },
-      { id: productId2, quantity: 2, deliveryOptionId: 1 }
+      { productId: productId1, quantity: 1, deliveryOptionId: '67' },
+      { productId: productId2, quantity: 2, deliveryOptionId: '1' }
     ]);
     loadFromStorage();
 
