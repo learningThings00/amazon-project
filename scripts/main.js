@@ -1,6 +1,9 @@
 import { products, loadProductsFetch } from '../data/products.js';
 import { addToCart } from '../data/cart.js';
 import { updateCartQuantity } from './utils/cartQuantity.js';
+import { searchProducts } from './utils/search.js';
+
+let productsToRender = [];
 
 async function loadPage() {
   try {
@@ -8,6 +11,17 @@ async function loadPage() {
   } catch (error) {
     console.log('Unexpected error. Please try again later.');
   }
+  const params = new URLSearchParams(window.location.search);
+  const searchTerm = params.get('search');
+  console.log(searchTerm);
+  productsToRender = searchTerm
+    ? products.filter((product) =>
+        product.keywords.some((keyword) =>
+          keyword.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      )
+    : products;
+
   renderProducts();
   updateCartQuantity();
 }
@@ -34,7 +48,7 @@ new Promise((resolve) => {
 */
 
 export function renderProducts() {
-  let productHTML = products
+  let productHTML = productsToRender
     .map((product) => {
       return `
     <div class="product-container">
@@ -126,3 +140,8 @@ function addedMessage(id) {
 
   allTimeoutIds[id] = timeoutId;
 }
+
+document.querySelector('.js-search-button').addEventListener('click', () => {
+  searchProducts();
+  console.log('click');
+});

@@ -49,7 +49,20 @@ main {
 
 .progress-bar-container {
   border: 1px solid gray;
-  border-radius: 20px;
-  height: 25px;
-  
+  border-radius: 50px;
+  height: 30px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  background-color: green;
+  border-radius: 50px;
+  height: 100%;
+  width: 0;
+
+  transition: width 1s;
+}
+
+.progress-indicator {
+  color: green;
 }

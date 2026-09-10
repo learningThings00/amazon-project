@@ -4,6 +4,7 @@ import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import { products, loadProductsFetch } from '../data/products.js';
 import { updateCartQuantity } from './utils/cartQuantity.js';
 import { addToCart, updateStorage } from '../data/cart.js';
+import { searchProducts } from './utils/search.js';
 
 loadPage();
 
@@ -17,7 +18,7 @@ async function loadPage() {
 function renderOrders() {
   let orderHTML = orders
     .map((value) => {
-      const isoString = value.orerTime;
+      const isoString = value.orderTime;
       const date = dayjs(isoString).format('MMMM D');
       const totalCost = currencyFormat(value.totalCostCents);
 
@@ -48,12 +49,12 @@ function renderOrders() {
                 <div class="quantity-row">
                   Quantity: <span class="js-quantity">${item.quantity}</span>
                 </div>
-                <button class="buy-again js-buy-again" data-button-id="${item.productId}">
+                <button class="buy-again js-buy-again js-buy-again-${value.id}-${item.productId}" data-button-id="${item.productId}" data-order-id="${value.id}">
                   <img src="images/icons/buy-again.png" class="buy-icon" />Buy
                   it again
                 </button>
                 <button class="track-package">
-                  <a href="tracking.html">Track package</a>
+                  <a href="tracking.html?orderId=${value.id}&productId=${item.productId}">Track package</a>
                 </button>
               </div>
             </div>`;
@@ -92,9 +93,41 @@ function renderOrders() {
   document.querySelectorAll('.js-buy-again').forEach((button) => {
     button.addEventListener('click', () => {
       const productId = button.dataset.buttonId;
+      const orderId = button.dataset.orderId;
       addToCart(productId, 1);
       updateStorage();
       updateCartQuantity();
+      addedMessage(productId, orderId);
     });
   });
+
+  const allTimeoutIds = {};
+
+  function addedMessage(productId, orderId) {
+    document.querySelector(`.js-buy-again-${orderId}-${productId}`).innerHTML =
+      '&check; Added';
+
+    const uniqueId = productId + orderId;
+
+    const previousTimeoutId = allTimeoutIds[uniqueId];
+
+    if (previousTimeoutId) {
+      clearTimeout(previousTimeoutId);
+    }
+
+    const intervalId = setTimeout(() => {
+      document.querySelector(
+        `.js-buy-again-${orderId}-${productId}`
+      ).innerHTML =
+        ` <img src="images/icons/buy-again.png" class="buy-icon" />Buy
+                  it again`;
+    }, 2000);
+
+    allTimeoutIds[uniqueId] = intervalId;
+  }
 }
+
+document.querySelector('.js-search-button').addEventListener('click', () => {
+  searchProducts();
+  console.log('click');
+});
