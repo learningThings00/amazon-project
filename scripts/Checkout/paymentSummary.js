@@ -12,7 +12,8 @@ function totalPrice() {
     );
 
     if (!matchingProduct) {
-      return 'Can not find matching product in product array';
+      console.error(`Product not found for id: ${curr.productId}`);
+      return acc;
     }
     return acc + matchingProduct.priceCents * curr.quantity;
   }, 0);

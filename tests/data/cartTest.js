@@ -14,9 +14,9 @@ describe('test suite: addToCart', () => {
     spyOn(localStorage, 'getItem').and.callFake(() =>
       JSON.stringify([
         {
-          id: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+          productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
           quantity: 1,
-          deliveryOptionId: 1
+          deliveryOptionId: '1'
         }
       ])
     );
@@ -29,13 +29,13 @@ describe('test suite: addToCart', () => {
       'cart',
       JSON.stringify([
         {
-          id: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+          productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
           quantity: 2,
-          deliveryOptionId: 1
+          deliveryOptionId: '1'
         }
       ])
     );
-    expect(cart[0].id).toEqual('e43638ce-6aa0-4b85-b27f-e1d07eb678c6');
+    expect(cart[0].productId).toEqual('e43638ce-6aa0-4b85-b27f-e1d07eb678c6');
     expect(cart[0].quantity).toEqual(2);
   });
   it('adds new item to the cart', () => {

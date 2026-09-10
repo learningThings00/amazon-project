@@ -9,7 +9,7 @@ async function loadPage() {
   try {
     await loadProductsFetch();
   } catch (error) {
-    console.log('Unexpected error. Please try again later.');
+    console.error('Unexpected error:', error);
   }
   const params = new URLSearchParams(window.location.search);
   const searchTerm = params.get('search');
@@ -26,26 +26,6 @@ async function loadPage() {
   updateCartQuantity();
 }
 loadPage();
-/*
-loadProducts(() => {
-  renderProducts();
-  updateCartQuantity();
-});
-*/
-/*
-loadProductsFetch().then(() => {
-  renderProducts();
-  updateCartQuantity();
-});
-*/
-/*
-new Promise((resolve) => {
-  loadProducts(() => resolve());
-}).then(() => {
-  renderProducts();
-  updateCartQuantity();
-});
-*/
 
 export function renderProducts() {
   let productHTML = productsToRender
