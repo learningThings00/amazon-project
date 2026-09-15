@@ -11,9 +11,15 @@ async function loadPage() {
   } catch (error) {
     console.error('Unexpected error:', error);
   }
+
+  renderProducts();
+}
+loadPage();
+
+export function renderProducts() {
   const params = new URLSearchParams(window.location.search);
   const searchTerm = params.get('search');
-  console.log(searchTerm);
+  let productsToRender;
   productsToRender = searchTerm
     ? products.filter((product) =>
         product.keywords.some((keyword) =>
@@ -22,12 +28,6 @@ async function loadPage() {
       )
     : products;
 
-  renderProducts();
-  updateCartQuantity();
-}
-loadPage();
-
-export function renderProducts() {
   let productHTML = productsToRender
     .map((product) => {
       return `
@@ -87,6 +87,8 @@ export function renderProducts() {
   document.querySelector('.js-product-display-container').innerHTML =
     productHTML;
 
+  updateCartText();
+
   document.querySelectorAll('.js-add-to-cart').forEach((button) => {
     button.addEventListener('click', () => {
       const productId = button.dataset.buttonId;
@@ -95,7 +97,7 @@ export function renderProducts() {
       );
       let quantity = Number(itemQuantity.value);
       addToCart(productId, quantity);
-      updateCartQuantity();
+      updateCartText();
       addedMessage(productId);
     });
   });
@@ -125,3 +127,13 @@ document.querySelector('.js-search-button').addEventListener('click', () => {
   searchProducts();
   console.log('click');
 });
+
+document.querySelector('.js-hamburger-icon').addEventListener('click', () => {
+  document.querySelector('.nav-container').classList.toggle('nav-visible');
+});
+
+function updateCartText() {
+  document.querySelector('.js-cart-quantity').innerText = updateCartQuantity();
+  document.querySelector('.js-cart-quantity-mobile').innerText =
+    updateCartQuantity();
+}

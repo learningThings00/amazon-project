@@ -33,11 +33,12 @@ function renderTracking() {
   const progress =
     ((todayTimeStamp - orderTimeStamp) / (deliveryTimeStamp - orderTimeStamp)) *
     100;
-  console.log(progress);
   const inProducts = products.find((product) => product.id === productId);
 
+  const deliveryStatus = progress < 100 ? 'Arriving' : 'Delivered';
+
   const trackingHTML = `
-  <div class="page-title">Arriving on ${deliveryDate}</div>
+  <div class="page-title">${deliveryStatus} on ${deliveryDate}</div>
       <div class="product-name">${inProducts.name}</div>
       <div class="quantity-row">Quantity: ${matchingProduct.quantity}</div>
       <img
@@ -56,21 +57,29 @@ function renderTracking() {
 
   document.querySelector('.js-tracking-container').innerHTML = trackingHTML;
 
+  document.querySelector('.js-cart-quantity').innerText = updateCartQuantity();
+  document.querySelector('.js-cart-quantity-mobile').innerText =
+    updateCartQuantity();
+
   if (progress < 49) {
     document.querySelector('.js-preparing').classList.add('progress-indicator');
   }
   if (progress < 99) {
-    document.querySelector('.js-preparing').classList.add('progress-indicator');
+    document.querySelector('.js-shipping').classList.add('progress-indicator');
   }
   if (progress > 99) {
-    document.querySelector('.js-preparing').classList.add('progress-indicator');
+    document.querySelector('.js-delivered').classList.add('progress-indicator');
   }
   setTimeout(() => {
     document.querySelector('.js-progress-bar').style.width =
       `${Math.min(progress, 100)}%`;
   }, 0);
-
-  document.querySelector('.js-search-button').addEventListener('click', () => {
-    searchProducts();
-  });
 }
+
+document.querySelector('.js-search-button').addEventListener('click', () => {
+  searchProducts();
+});
+
+document.querySelector('.js-hamburger-icon').addEventListener('click', () => {
+  document.querySelector('.nav-container').classList.toggle('nav-visible');
+});

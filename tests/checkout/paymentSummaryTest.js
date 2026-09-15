@@ -15,7 +15,6 @@ describe('test suite: renderPaymentSummary', () => {
 
     document.querySelector('.js-test-container').innerHTML = `
       <div class="js-payment-summary"></div>
-      <div class="js-cart-quantity"></div>
       `;
 
     loadFromStorage();
@@ -38,7 +37,7 @@ describe('test suite: renderPaymentSummary', () => {
 
     renderPaymentSummary();
 
-    expect(document.querySelector('.js-cart-quantity').innerText).toEqual('3');
+    expect(document.querySelector('.js-item-quantity').innerText).toEqual('3');
   });
 
   it('shows 0 as shipping when deliveryOptionId is 1', () => {

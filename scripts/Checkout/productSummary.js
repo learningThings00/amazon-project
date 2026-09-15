@@ -181,5 +181,5 @@ export function renderProductSummary() {
   deleteCartItems();
   updateCartItems();
   saveQuantity();
-  updateCartQuantity();
+  document.querySelector('.js-cart-quantity').innerText = updateCartQuantity();
 }

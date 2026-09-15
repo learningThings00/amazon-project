@@ -12,7 +12,6 @@ async function loadPage() {
   await loadProductsFetch();
 
   renderOrders();
-  updateCartQuantity();
 }
 
 function renderOrders() {
@@ -90,13 +89,15 @@ function renderOrders() {
 
   document.querySelector('.js-order-list').innerHTML = orderHTML;
 
+  updateCartText();
+
   document.querySelectorAll('.js-buy-again').forEach((button) => {
     button.addEventListener('click', () => {
       const productId = button.dataset.buttonId;
       const orderId = button.dataset.orderId;
       addToCart(productId, 1);
       updateStorage();
-      updateCartQuantity();
+      updateCartText();
       addedMessage(productId, orderId);
     });
   });
@@ -131,3 +132,13 @@ document.querySelector('.js-search-button').addEventListener('click', () => {
   searchProducts();
   console.log('click');
 });
+
+document.querySelector('.js-hamburger-icon').addEventListener('click', () => {
+  document.querySelector('.nav-container').classList.toggle('nav-visible');
+});
+
+function updateCartText() {
+  document.querySelector('.js-cart-quantity').innerText = updateCartQuantity();
+  document.querySelector('.js-cart-quantity-mobile').innerText =
+    updateCartQuantity();
+}

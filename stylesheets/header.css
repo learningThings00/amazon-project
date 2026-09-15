@@ -36,14 +36,15 @@
   flex: 1;
 
   max-width: 850px;
+  min-width: 0;
   margin: 0 10px;
   height: 40px;
 }
 
 .search-bar {
   flex: 1;
-  min-width: 0;
   border-radius: 3px 0 0 3px;
+  min-width: 0;
   border: none;
 
   padding: 20px;
@@ -124,61 +125,59 @@
   color: white;
 }
 
-.checkout-header {
-  background-color: white;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  height: 60px;
-  padding: 0 30px;
-  width: 100%;
-  max-width: 1100px;
-
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-
-  z-index: 9999;
-}
-
 .amazon-mobile-logo {
   display: none;
 }
 
-.checkout-header .header-right {
-  align-items: center;
-  flex-shrink: 0;
-  
+.header-right-mobile {
+  display: none;
 }
 
-.checkout-header .header-middle {
-  flex-shrink: 0;
+.nav-container {
+  display: none;
+  background-color: black;
   text-align: center;
-  justify-content: center;
 
-  font-size: 22px;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  height: 90px;
+
+  z-index: 9999;
+}
+
+.order-section-mobile, .cart-text-mobile {
+  margin-top: 10px;
+  text-decoration: none;
+  color: white;
   font-weight: 500;
 }
 
-.cart-item {
-  font-size: 18px;
-  color: rgb(13, 103, 193);
+.order-section-mobile:hover, .cart-text-mobile:hover {
+  background-color: rgb(38, 50, 63);
 }
 
-.lock-icon {
-  margin-bottom: 8px;
+.cart-quantity-mobile {
+  color: rgb(240, 180, 15);
 }
 
 @media (max-width: 575px) {
-  .checkout-header .header-left {
-   width: auto; 
-  }
 
   .amazon-logo {
     display: none;
+  }
+
+  .header-right {
+    display: none;
+  }
+
+  .header-right-mobile {
+    display: inline-block;
+  }
+
+  .nav-visible {
+    display: grid;
   }
 
   .amazon-mobile-logo {
@@ -187,28 +186,7 @@
     margin-top: 5px;
   }
 
-  .checkout-header .header-middle {
-    margin-right: 5px;
-    font-size: 20px;
-  }
-
   .cart-item {
     font-size: 16px;
-  }
-
-  .checkout-header .header-right {
-    text-align: right;
-    width: 150px;
-  }
-}
-
-@media (max-width: 1000px) {
-  .checkout-header .header-middle {
-    font-size: 22px;
-    margin-right: 60px;
-  }
-
-  .checkout-header .header-middle {
-    width: auto;
   }
 }

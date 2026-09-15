@@ -19,7 +19,7 @@
   </head>
   <body>
     <header class="amazon-header">
-      <div class="header-left">
+      <section class="header-left">
         <a href="/">
           <img
             src="images/logo/amazon-logo-white.png"
@@ -32,9 +32,9 @@
             class="amazon-mobile-logo"
           />
         </a>
-      </div>
+      </section>
 
-      <div class="header-middle">
+      <section class="header-middle">
         <input
           type="search"
           name="search"
@@ -50,9 +50,9 @@
             class="search-icon"
           />
         </button>
-      </div>
+      </section>
 
-      <div class="header-right">
+      <section class="header-right">
         <a class="order-section" href="orders.html">
           <span class="return-text">Return</span>
           <span class="order-text">& Orders</span>
@@ -64,6 +64,17 @@
             class="cart-icon"
           /><span class="cart-text">Cart</span>
           <span class="cart-quantity js-cart-quantity"></span>
+        </a>
+      </section>
+      <section class="header-right-mobile">
+        <img src="images/icons/hamburger-menu.png" class="js-hamburger-icon" />
+      </section>
+
+      <div class="nav-container">
+        <a class="order-section-mobile" href="orders.html">Return & Orders</a>
+        <a href="checkout.html" class="cart-text-mobile">
+          Cart(<span class="cart-quantity-mobile js-cart-quantity-mobile"></span
+          >)
         </a>
       </div>
     </header>
